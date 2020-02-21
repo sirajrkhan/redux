@@ -11,6 +11,7 @@ const controls = [
 
 const buildControls = (props) => (
     <div className={classes.BuildControls}>
+        <p>Current Price: <strong>{props.price.toFixed(2)}</strong></p>
         {
             controls.map( 
                 ctrl => <BuildControl 
@@ -22,7 +23,6 @@ const buildControls = (props) => (
                         />
             )
         }
-        {/* {console.log('hi...'+props.Disabled['salad'])} */}
     </div>
 )
 
