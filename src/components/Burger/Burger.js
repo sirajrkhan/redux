@@ -29,17 +29,3 @@ const burger = (props) => {
 }
 
 export default burger;
-
-// {
-//     entries.map(
-//         x => {
-//             return x.map(
-//                 y => {
-//                     console.log(y);
-//                     return <BurgerIngredient type={y} />
-//                 }
-//             )
-//         }
-//     )
-
-// }
