@@ -5,8 +5,7 @@ const menubar = (props) => {
     return(
         <div 
             className={classes.DrawerToggle}
-            onClick={props.drawerToggle}
-        >
+            onClick={props.drawerToggle} >
             <div></div>
             <div></div>
             <div></div>

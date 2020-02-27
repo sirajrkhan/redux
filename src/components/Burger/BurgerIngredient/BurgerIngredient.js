@@ -41,5 +41,4 @@ export default burgerIngredient;
 
 burgerIngredient.propTypes = {
     type: PropTypes.string.isRequired,
-
 }
