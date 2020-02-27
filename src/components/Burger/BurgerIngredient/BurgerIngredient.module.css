@@ -2,6 +2,7 @@ main{
   width: 80vw;
   height: 80vh;
   display: flex;
+  padding-top: 35px;
   flex-flow: column;
   margin: 0 auto;
 }
