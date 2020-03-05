@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
-import BuildControls from '../../components/Burger/BuildControls/BuildControls'
-import Modal from '../../components/UI/Modal/Modal'
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import axios from '../../axios-orders'
+import axios from '../../axios-orders';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENT_PRICES = {
     cheese: .5,
@@ -15,17 +16,28 @@ const INGREDIENT_PRICES = {
 }
 
 class BurgerBuilder extends Component{
+
     state = {
-        ingredients : {
-            cheese: 0,
-            salad:  0,
-            bacon: 0,
-            meat: 0
-        },
+        ingredients : null,
         totalPrice: 4,
         purchasable: false,
         purchasing: false,
         isLoading: false
+    }
+
+    componentDidMount(){
+        axios.get('/ingredients.json')
+        .then(
+            response => {
+                console.log('Ingredients @ Server', response);
+                this.setState({ingredients: response.data})
+            }
+        )
+        .catch(
+            error => {
+                console.log('Something...')
+            }
+        )
     }
 
     updatePurchaseState (ingredients) {
@@ -83,7 +95,6 @@ class BurgerBuilder extends Component{
     }
 
     purchaseContinueHandler = () => {
-        //alert('Carry on with your purchase!!')
         this.setState({isLoading:true})
         const order = {
             ingredients: this.state.ingredients,
@@ -101,7 +112,6 @@ class BurgerBuilder extends Component{
         }
         axios.post('/orders.json', order)
         .then(response => {
-            console.log('Response is: ', response);
             this.setState({isLoading: false, purchasing: false})
         })
         .catch(error => {
@@ -117,7 +127,7 @@ class BurgerBuilder extends Component{
             cancelled={this.purchaseCancelHandler}
             continued={this.purchaseContinueHandler}
         />;
-        if (this.state.isLoading){
+        if (this.state.isLoading || !this.state.ingredients){
             orderSummary = <Spinner />
         }
         
@@ -128,25 +138,33 @@ class BurgerBuilder extends Component{
             disabledInfo[key] = disabledInfo[key] <=0 
         }
 
+        let burgerContent = (
+            <>
+                <Burger 
+                    ingred={this.state.ingredients} />
+                <BuildControls 
+                    Disabled={disabledInfo}
+                    price = {this.state.totalPrice}
+                    more={this.addIngredientHandler}
+                    purchasable={this.state.purchasable}
+                    ordered={this.purchaseHandler}
+                    less={this.removeIngredientHandler} />            
+            </>
+        )
+        if (!this.state.ingredients){
+            burgerContent = <Spinner />
+        }
+
         return(
             <Aux>
                 <Modal 
                     show={this.state.purchasing} 
                     modalClosed={this.purchaseCancelHandler}
-                >
-                    {orderSummary}
-                </Modal>
-                <Burger ingred={this.state.ingredients} />
-                <BuildControls 
-                Disabled={disabledInfo}
-                price = {this.state.totalPrice}
-                more={this.addIngredientHandler}
-                purchasable={this.state.purchasable}
-                ordered={this.purchaseHandler}
-                less={this.removeIngredientHandler} />
+                    children={orderSummary} />
+                {burgerContent}
             </Aux>
         )
     }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
