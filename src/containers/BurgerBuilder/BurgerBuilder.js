@@ -26,6 +26,8 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount(){
+        console.log('props',this.props);
+
         axios.get('/ingredients.json')
         .then(
             response => {
@@ -110,10 +112,27 @@ class BurgerBuilder extends Component{
             },
             deliveryMethod: 'fastest'
         }
+
+        //Here's routing specific code
+        const composition = this.state.ingredients;
+        const queryParam = [];
+        for (let i in composition){
+            queryParam.push(encodeURIComponent(i) +'='+ encodeURIComponent(composition[i]))
+        }
+        const qs = queryParam.join('&');
+        console.log('qs: ',qs)
+
         axios.post('/orders.json', order)
         .then(response => {
             this.setState({isLoading: false, purchasing: false})
         })
+        .then(
+            //do something...
+            this.props.history.push({
+                pathname: '/checkout',
+                search: '?' + qs
+            })
+        )
         .catch(error => {
             console.log(error)
             this.setState({isLoading: false, purchasing: false})
