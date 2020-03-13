@@ -13,7 +13,7 @@ function App() {
           <Route path="/checkout" component={Checkout} />
           <Route path="/" exact component={BurgerBuilder} />
         </Switch>
-        </Layout>
+      </Layout>
     </div>
   );
 }
