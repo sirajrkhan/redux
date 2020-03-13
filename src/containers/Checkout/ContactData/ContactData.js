@@ -13,8 +13,7 @@ class ContactData extends Component{
             postcode: ''
         },
         isLoading: false,
-        ingredients: null,
-
+        ingredients: null
     }
 
     orderHandler = (event) =>{
@@ -25,12 +24,11 @@ class ContactData extends Component{
             ingredients: this.props.ingredients,
             totalPrice: this.props.price,
             customer: {
-                name: 'Siraj',
-                mail: 'siraj@siraj.com',
+                name: 'Siraj Khan',
+                email: 'sirajrkhan@live.in',
                 address: {
-                    street: '123 abc',
-                    city: 'BLR',
-                    country: 'India'
+                    street: 'BSK 2',
+                    postcode: '560070'
                 }
             },
             deliveryMethod: 'fastest'
@@ -39,7 +37,7 @@ class ContactData extends Component{
         axios.post('/orders.json', order)
         .then(response => {
             this.setState({isLoading: false})
-            this.props.history.push('/')
+            this.props.history.push('/Orders')
         })
         .catch(error => {
             console.log(error)
