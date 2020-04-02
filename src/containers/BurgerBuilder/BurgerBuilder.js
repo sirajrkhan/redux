@@ -10,49 +10,19 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-// const INGREDIENT_PRICES = {
-//     cheese: .5,
-//     salad:  .3,
-//     bacon: .7,
-//     meat: 1.3
-// }
-
 class BurgerBuilder extends Component{
 
     state = {
-        // ingredients : null,
-        // totalPrice: 4,
-        // purchasable: false,
         purchasing: false,
         isLoading: false
     }
 
-    componentDidMount(){
-        console.log('props',this.props);
-
-        // axios.get('/ingredients.json')
-        // .then(
-        //     response => {
-        //         console.log('Ingredients @ Server', response);
-        //         this.setState({ingredients: response.data})
-        //     }
-        // )
-        // .catch(
-        //     error => {
-        //         console.log('Something...')
-        //     }
-        // )
-    }
-
     isItPurchasable = () => {
         //reduce will sum all the values
-        const total = Object.values(this.props.ings).reduce((sum,el) => { 
-            return sum + el;
-        }, 0);
-        return (total > 0) ? true : false;
+        return  Object.values(this.props.ings).reduce((sum,el) => (sum + el), 0) > 0 ? true : false;
 
         /**** 
-            * I loved simpler below *
+            * I made above look complicated, but loved simpler approach below *
             let i = 0;
             Object.values(this.props.ings).map( value => (i = i + value) );
             return (i > 0) ? true : false;
