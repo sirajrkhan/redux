@@ -8,10 +8,8 @@ class ContactData extends Component{
     state = {
         name: '',
         email: '',
-        address: {
-            street: '',
-            postcode: ''
-        },
+        street: '',
+        postcode: '',
         isLoading: false,
         ingredients: null
     }
@@ -24,11 +22,11 @@ class ContactData extends Component{
             ingredients: this.props.ingredients,
             totalPrice: this.props.price,
             customer: {
-                name: 'Siraj Khan',
-                email: 'sirajrkhan@live.in',
+                name: this.state.name,
+                email: this.state.email,
                 address: {
-                    street: 'BSK 2',
-                    postcode: '560070'
+                    street: this.state.street,
+                    postcode: this.state.postcode
                 }
             },
             deliveryMethod: 'fastest'
@@ -45,13 +43,34 @@ class ContactData extends Component{
         })
     }
 
+    nameUpdateHandler = (event) => {
+        this.setState(
+            {name: event.target.value}
+        )
+    }
+    emailUpdateHandler = (event) => {
+        this.setState(
+            {email: event.target.value}
+        )
+    }
+    streetUpdateHandler = (event) => {
+        this.setState(
+            {street: event.target.value}
+        )
+    }
+    postcodeUpdateHandler = (event) => {
+        this.setState(
+            {postcode: event.target.value}
+        )
+    }
+
     render(){
         const form = (this.state.isLoading) ? <Spinner /> : (
             <form>
-                <input type="text" name="name" placeholder="Enter your Name" />
-                <input type="email" name="email" placeholder="Enter your Email" />
-                <input type="text" name="street" placeholder="Enter your Street" />
-                <input type="text" name="postcode" placeholder="Enter your Postalcode" />
+                <input type="text" name="name" placeholder="Enter your Name" value={this.state.name} onChange={this.nameUpdateHandler} />
+                <input type="email" name="email" placeholder="Enter your Email" value={this.state.email} onChange={this.emailUpdateHandler} />
+                <input type="text" name="street" placeholder="Enter your Street" value={this.state.street} onChange={this.streetUpdateHandler} />
+                <input type="text" name="postcode" placeholder="Enter your Postalcode" value={this.state.postcode} onChange={this.postcodeUpdateHandler} />
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         )
