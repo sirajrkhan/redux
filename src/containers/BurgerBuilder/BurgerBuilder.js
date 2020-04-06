@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -19,7 +19,7 @@ class BurgerBuilder extends Component{
 
     isItPurchasable = () => {
         //reduce will sum all the values
-        return  Object.values(this.props.ings).reduce((sum,el) => (sum + el), 0) > 0 ? true : false;
+        return Object.values(this.props.ings).reduce((sum,el) => (sum + el), 0) > 0 ? true : false;
 
         /**** 
             * I made above look complicated, but loved simpler approach below *
@@ -97,8 +97,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (type) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: type}),
-        onIngredientRemoved: (type) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: type})
+        onIngredientAdded: (type) => dispatch(burgerBuilderActions.addIngredient(type)),
+        onIngredientRemoved: (type) => dispatch(burgerBuilderActions.removeIngredient(type))
+        // onIngredientAdded: (type) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: type}),
     }
 }
 
