@@ -18,9 +18,11 @@ class Orders extends Component{
                 for (let key in response.data){
                     fetchedOrders.push({
                         ...response.data[key],
-                        id: key
+                        id: key,
                     });
                 }
+                console.log('fetchedOrder: ', fetchedOrders);
+                
                 this.setState({orders: fetchedOrders})
             }
         )
@@ -47,7 +49,7 @@ class Orders extends Component{
                         order => {
                             return (
                                 <> 
-                                    <div>{order.customer.name} | {order.customer.email}</div>
+                                    <div key={Math.random() * 107.37}>{order.customer.name} | {order.customer.email}</div>
                                     <Order 
                                         key={order.id} 
                                         ingredients={order.ingredients} 

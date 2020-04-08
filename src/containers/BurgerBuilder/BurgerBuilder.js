@@ -11,10 +11,13 @@ import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class BurgerBuilder extends Component{
+    componentDidMount () {
+        this.props.onIngredientInit();
+    }
 
     state = {
         purchasing: false,
-        isLoading: false
+        isLoading: false,
     }
 
     isItPurchasable = () => {
@@ -22,7 +25,7 @@ class BurgerBuilder extends Component{
         return Object.values(this.props.ings).reduce((sum,el) => (sum + el), 0) > 0 ? true : false;
 
         /**** 
-            * I made above look complicated, but loved simpler approach below *
+            * above look complicated, I loved simpler approach below *
             let i = 0;
             Object.values(this.props.ings).map( value => (i = i + value) );
             return (i > 0) ? true : false;
@@ -98,8 +101,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (type) => dispatch(burgerBuilderActions.addIngredient(type)),
-        onIngredientRemoved: (type) => dispatch(burgerBuilderActions.removeIngredient(type))
-        // onIngredientAdded: (type) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: type}),
+        onIngredientRemoved: (type) => dispatch(burgerBuilderActions.removeIngredient(type)),
+        onIngredientInit: () => dispatch(burgerBuilderActions.initIngredients())
     }
 }
 

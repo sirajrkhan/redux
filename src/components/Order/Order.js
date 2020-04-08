@@ -11,7 +11,7 @@ const order = (props) => {
     }
 
     const ingOut = ing.map(
-        ig => (<span style={{textTransform:`capitalize`, border: `1px solid #EEE`, padding: `5px`, margin: `3px`}} key={ig.name}> {ig.name}: {ig.amount},</span>)
+        ig => (<span style={{textTransform:`capitalize`, border: `1px solid #EEE`, padding: `5px`, margin: `3px`}} key={Math.random()*107.34}> {ig.name}: {ig.amount},</span>)
     )
 
     return (
