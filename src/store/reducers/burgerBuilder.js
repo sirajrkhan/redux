@@ -18,7 +18,6 @@ const INGREDIENT_PRICES = {
     meat: 1.3
 }
 
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
@@ -42,8 +41,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_INGREDIENT:
             return {
                 ...state,
-                ingredients:action.ingredients
-            }                        
+                ingredients: action.ingredients
+            }     
         default:
             return state;
     }
